@@ -2,7 +2,7 @@
 import React, { createContext, useReducer, useContext, PropsWithChildren } from 'react';
 
 // Define the shape of the hero state
-interface Hero {
+export interface Hero {
     name: string;
     level: number;
     health: number;
@@ -50,6 +50,8 @@ const heroReducer = (state: Hero, action: Action): Hero => {
             return { ...state, name: action.payload };
         case 'INCREASE_LEVEL':
             return { ...state, level: state.level + 1 };
+        case 'INCREASE_HEALTH':
+            return { ...state, health: state.health + action.payload }
         case 'DECREASE_HEALTH':
             return { ...state, health: state.health - action.payload };
         case 'SET_ARMOR':

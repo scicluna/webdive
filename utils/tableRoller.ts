@@ -4,16 +4,17 @@ export type Item = {
     type: string,
     itemName: string,
     description: string,
-    action: Action,
+    action: Action[],
 }
 
 export type SpecialAttack = {
     type: string,
     attackName: string,
-    action: Action,
+    action: Action[],
 }
 
 export type Monster = {
+    name: string,
     hp: number,
     defense: number,
     attack: number,
@@ -23,15 +24,17 @@ export type Monster = {
 
 export type DecisionOption = {
     description: string,
-    action: Action,
+    action: Action[],
 }
 
 export type Encounter = {
+    type: string,
     roomNumber: number,
     monsters: Monster[]
 }
 
 export type Decision = {
+    type: string,
     roomNumber: number,
     wallText: string,
     options: DecisionOption[]
