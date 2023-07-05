@@ -1,0 +1,10 @@
+1. classes for players/encounters/decisions/monsters/items
+2. general ui for decisions/general ui for encounters
+3. some items flagged for decisions and some for combat
+4. leveling up and experience - hero stats and statgrowth
+5. monster stats 
+6. room generation based on category of room (catacombs, forest, etc...)
+7. treasure generation based on monster loot tables (a prop of monsters)
+8. single level (catacombs) to begin with, ending with a boss encounter
+9. figure out how to do this all in react.
+10. Dall-E art?
