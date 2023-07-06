@@ -1,7 +1,7 @@
 'use client'
 import { useHero, Hero } from "@/components/HeroContext"
 import { Dispatch, useEffect, useState, useMemo } from "react";
-import { tableRoller } from "@/utils/tableRoller";
+import { Monster, tableRoller } from "@/utils/tableRoller";
 import { Encounter, Decision } from "@/utils/tableRoller";
 import MonsterSpace from "@/components/MonsterSpace";
 import HeroSpace from "@/components/HeroSpace";
@@ -59,11 +59,12 @@ type RoomProps = {
 export function EncounterRoom({ heroes, room, toggleBusy }: RoomProps) {
     if (room.type !== "Encounter") return null;
     const [encounter, setEncounter] = useState<Encounter>(room as Encounter)
+    const [target, setTarget] = useState<number>(0)
 
     return (
         <div className="h-full w-screen flex flex-col">
             <MonsterSpace monsters={encounter.monsters} />
-            <HeroSpace heroes={heroes} />
+            <HeroSpace heroes={heroes} target={target} encounter={encounter} setEncounter={setEncounter} />
         </div>
     )
 }

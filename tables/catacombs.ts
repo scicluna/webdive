@@ -70,10 +70,10 @@ const catacombsDecisions: Decision[] = [
         wallText: "An eerie green glow illuminates a side path, while a skeletal figure can be seen down the main path. Which do you take?",
         options: [{
             description: "Brave the skeleton and take the main path.",
-            action: [{ type: 'INCREASE_LEVEL', payload: 1 }]
+            action: [{ type: 'INCREASE_LEVEL', payload: { amount: 1 } }]
         }, {
             description: "Investigate the green glow down the side path.",
-            action: [{ type: 'DECREASE_HEALTH', payload: 3 }]
+            action: [{ type: 'DECREASE_HEALTH', payload: { amount: 3 } }]
         }]
     },
     {
@@ -82,7 +82,7 @@ const catacombsDecisions: Decision[] = [
         wallText: "You find a fountain filled with dark water. Do you drink it or ignore it?",
         options: [{
             description: "Drink the water.",
-            action: [{ type: 'DECREASE_HEALTH', payload: 5 }]
+            action: [{ type: 'DECREASE_HEALTH', payload: { amount: 5 } }]
         }, {
             description: "Ignore the fountain.",
             action: []
@@ -94,7 +94,7 @@ const catacombsDecisions: Decision[] = [
         wallText: "You discover a chest encrusted with ancient symbols. Do you try to open it or leave it be?",
         options: [{
             description: "Try to open the chest.",
-            action: [{ type: 'INCREASE_LEVEL', payload: 2 }]
+            action: [{ type: 'INCREASE_LEVEL', payload: { amount: 2 } }]
         }, {
             description: "Leave the chest alone.",
             action: []
@@ -106,7 +106,7 @@ const catacombsDecisions: Decision[] = [
         wallText: "You encounter a spectral figure that offers to share its knowledge for a price. Do you accept?",
         options: [{
             description: "Accept the figure's offer.",
-            action: [{ type: 'INCREASE_LEVEL', payload: 3 }, { type: 'DECREASE_HEALTH', payload: 10 }]
+            action: [{ type: 'INCREASE_LEVEL', payload: { amount: 3 } }, { type: 'DECREASE_HEALTH', payload: { amount: 10 } }]
         }, {
             description: "Politely decline.",
             action: []
@@ -118,7 +118,7 @@ const catacombsDecisions: Decision[] = [
         wallText: "A narrow bridge stretches across a seemingly bottomless pit. Do you cross it or look for another way around?",
         options: [{
             description: "Cross the bridge.",
-            action: [{ type: 'DECREASE_HEALTH', payload: 5 }]
+            action: [{ type: 'DECREASE_HEALTH', payload: { amount: 5 } }]
         }, {
             description: "Look for another way around.",
             action: []
