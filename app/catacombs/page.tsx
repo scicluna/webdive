@@ -3,6 +3,8 @@ import { useHero, Hero } from "@/components/HeroContext"
 import { Dispatch, useEffect, useState, useMemo } from "react";
 import { tableRoller } from "@/utils/tableRoller";
 import { Encounter, Decision } from "@/utils/tableRoller";
+import MonsterSpace from "@/components/MonsterSpace";
+import HeroSpace from "@/components/HeroSpace";
 import { catacombsEncounters, catacombsDecisions } from "@/tables/catacombs";
 
 //import all catacombs tables here
@@ -17,7 +19,7 @@ export default function Catacombs() {
     const [isDecision, setIsDecision] = useState<boolean>(false);
     const [isEncounter, setIsEncounter] = useState<boolean>(false);
     const [notBusy, setNotBusy] = useState<boolean>(true)
-    const hero = useHero();
+    const heroes = useHero();
 
     console.log(rooms)
 
@@ -35,9 +37,9 @@ export default function Catacombs() {
     console.log(isDecision)
 
     return (
-        <section className="h-full w-full flex">
+        <section className="h-full flex">
             <div>
-                {isEncounter ? <EncounterRoom hero={hero} room={rooms[currentRoom]} toggleBusy={toggleBusy} /> : isDecision && <DecisionRoom hero={hero} room={rooms[currentRoom]} toggleBusy={toggleBusy} />}
+                {isEncounter ? <EncounterRoom heroes={heroes} room={rooms[currentRoom]} toggleBusy={toggleBusy} /> : isDecision && <DecisionRoom heroes={heroes} room={rooms[currentRoom]} toggleBusy={toggleBusy} />}
                 {notBusy && <button onClick={() => setCurrentRoom(prev => prev + 1)}>Continue</button>}
             </div>
         </section>
@@ -45,8 +47,8 @@ export default function Catacombs() {
 }
 
 type RoomProps = {
-    hero: {
-        state: Hero,
+    heroes: {
+        state: Hero[],
         dispatch: Dispatch<any>
     },
     room: Decision | Encounter
@@ -54,17 +56,20 @@ type RoomProps = {
 }
 
 //Encounters
-export function EncounterRoom({ hero, room, toggleBusy }: RoomProps) {
+export function EncounterRoom({ heroes, room, toggleBusy }: RoomProps) {
     if (room.type !== "Encounter") return null;
     const [encounter, setEncounter] = useState<Encounter>(room as Encounter)
 
     return (
-        <h1>Encounter</h1>
+        <div className="h-full w-screen flex flex-col">
+            <MonsterSpace monsters={encounter.monsters} />
+            <HeroSpace heroes={heroes} />
+        </div>
     )
 }
 
 //Decisions
-export function DecisionRoom({ hero, room, toggleBusy }: RoomProps) {
+export function DecisionRoom({ heroes, room, toggleBusy }: RoomProps) {
     if (room.type !== "Decision") return null;
     const [encounter, setEncounter] = useState<Decision>(room as Decision)
 
