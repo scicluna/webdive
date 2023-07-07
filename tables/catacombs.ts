@@ -9,7 +9,8 @@ const catacombsEncounters: Encounter[] = [
             defense: 0,
             attack: 3,
             loot: [],
-            specialAttacks: []
+            specialAttacks: [],
+            alive: true
         }]
     },
     {
@@ -21,7 +22,8 @@ const catacombsEncounters: Encounter[] = [
             defense: 1,
             attack: 4,
             loot: [],
-            specialAttacks: []
+            specialAttacks: [],
+            alive: true
         }]
     },
     {
@@ -33,7 +35,8 @@ const catacombsEncounters: Encounter[] = [
             defense: 1,
             attack: 2,
             loot: [],
-            specialAttacks: []
+            specialAttacks: [],
+            alive: true
         }]
     },
     {
@@ -45,7 +48,8 @@ const catacombsEncounters: Encounter[] = [
             defense: 3,
             attack: 5,
             loot: [],
-            specialAttacks: []
+            specialAttacks: [],
+            alive: true
         }]
     },
     {
@@ -57,7 +61,8 @@ const catacombsEncounters: Encounter[] = [
             defense: 4,
             attack: 6,
             loot: [],
-            specialAttacks: []
+            specialAttacks: [],
+            alive: true
         }]
     },
 ];

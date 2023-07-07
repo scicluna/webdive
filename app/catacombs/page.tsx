@@ -1,11 +1,12 @@
 'use client'
 import { useHero, Hero } from "@/components/HeroContext"
-import { Dispatch, useEffect, useState, useMemo } from "react";
+import { Dispatch, useEffect, useState, useMemo, use } from "react";
 import { Monster, tableRoller } from "@/utils/tableRoller";
 import { Encounter, Decision } from "@/utils/tableRoller";
 import MonsterSpace from "@/components/MonsterSpace";
 import HeroSpace from "@/components/HeroSpace";
 import { catacombsEncounters, catacombsDecisions } from "@/tables/catacombs";
+import { v4 } from "uuid";
 
 //import all catacombs tables here
 //create a "traverse catacombs function"
@@ -18,29 +19,26 @@ export default function Catacombs() {
     const [currentRoom, setCurrentRoom] = useState<number>(0)
     const [isDecision, setIsDecision] = useState<boolean>(false);
     const [isEncounter, setIsEncounter] = useState<boolean>(false);
-    const [notBusy, setNotBusy] = useState<boolean>(true)
+    const [busy, setBusy] = useState<boolean>(true)
     const heroes = useHero();
 
-    console.log(rooms)
+    console.log(busy)
 
     useEffect(() => {
-        setNotBusy(false)
+        setBusy(true)
         setIsDecision(rooms[currentRoom].type === "Decision");
         setIsEncounter(rooms[currentRoom].type === "Encounter");
     }, [rooms, currentRoom])
 
-    function toggleBusy() {
-        setNotBusy(prev => !prev)
+    function toggleBusy(bool: boolean) {
+        setBusy(bool)
     }
-
-    console.log(isEncounter)
-    console.log(isDecision)
 
     return (
         <section className="h-full flex">
-            <div>
-                {isEncounter ? <EncounterRoom heroes={heroes} room={rooms[currentRoom]} toggleBusy={toggleBusy} /> : isDecision && <DecisionRoom heroes={heroes} room={rooms[currentRoom]} toggleBusy={toggleBusy} />}
-                {notBusy && <button onClick={() => setCurrentRoom(prev => prev + 1)}>Continue</button>}
+            <div className="flex relative">
+                {isEncounter ? <EncounterRoom heroes={heroes} room={rooms[currentRoom]} toggleBusy={toggleBusy} key={currentRoom} /> : isDecision && <DecisionRoom heroes={heroes} room={rooms[currentRoom]} toggleBusy={toggleBusy} key={currentRoom} />}
+                {!busy && <button className="absolute right-2 top-1/2" onClick={() => setCurrentRoom(prev => prev + 1)}>Continue</button>}
             </div>
         </section>
     )
@@ -52,7 +50,7 @@ type RoomProps = {
         dispatch: Dispatch<any>
     },
     room: Decision | Encounter
-    toggleBusy: () => void
+    toggleBusy: (bool: boolean) => void
 }
 
 //Encounters
@@ -61,9 +59,16 @@ export function EncounterRoom({ heroes, room, toggleBusy }: RoomProps) {
     const [encounter, setEncounter] = useState<Encounter>(room as Encounter)
     const [target, setTarget] = useState<number>(0)
 
+    console.log(encounter.monsters)
+
+    useEffect(() => {
+        const allMonstersDead = encounter.monsters.every(monster => !monster.alive);
+        if (allMonstersDead) toggleBusy(false)
+    }, [encounter.monsters, toggleBusy])
+
     return (
         <div className="h-full w-screen flex flex-col">
-            <MonsterSpace monsters={encounter.monsters} />
+            <MonsterSpace monsters={encounter.monsters} target={target} setTarget={setTarget} />
             <HeroSpace heroes={heroes} target={target} encounter={encounter} setEncounter={setEncounter} />
         </div>
     )

@@ -2,6 +2,7 @@ import { Monster } from "./tableRoller";
 import { Action, Hero } from "@/components/HeroContext";
 
 export function monsterAction(monster: Monster, heroes: { state: Hero[], dispatch: React.Dispatch<Action> }): void {
+    if (!monster.alive) return
     // Select a random hero
     const targetIndex = Math.floor(Math.random() * heroes.state.length);
     const target = heroes.state[targetIndex];

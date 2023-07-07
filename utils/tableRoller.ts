@@ -20,6 +20,7 @@ export type Monster = {
     attack: number,
     loot: Item[],
     specialAttacks: SpecialAttack[]
+    alive: boolean
 }
 
 export type DecisionOption = {
