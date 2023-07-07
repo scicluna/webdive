@@ -9,6 +9,7 @@ export interface Hero {
     defense: number;
     attack: number;
     options: string[];
+    active: boolean;
 }
 
 const actions = [
@@ -20,7 +21,8 @@ const actions = [
     'DECREASE_HEALTH',
     'INCREASE_HEALTH',
     'SET_ARMOR',
-    'SET_WEAPON'
+    'SET_WEAPON',
+    'TOGGLE_ACTIVE'
 ] as const;
 
 // Define the shape of the actions that can be dispatched
@@ -43,7 +45,8 @@ const initialHeroState: Hero[] = [{
     hp: 100,
     defense: 0,
     attack: 1,
-    options: ['ATK', 'BLK', 'ITM']
+    options: ['ATK', 'BLK', 'ITM'],
+    active: true
 }];
 
 // Create the context
@@ -88,6 +91,9 @@ const heroReducer = (state: Hero[], action: Action): Hero[] => {
         case 'SET_WEAPON':
             return state.map(hero =>
                 action.payload.attack && (hero.name === action.payload.name) ? { ...hero, attack: Math.max(action.payload.attack, 1) } : hero);
+        case 'TOGGLE_ACTIVE':
+            return state.map(hero =>
+                hero.name === action.payload.name ? { ...hero, active: !hero.active } : { ...hero });
         default:
             return state;
     }
